@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isabella Isotta · Projects</title>
+<meta name="description" content="Everything Isabella Isotta has built and shipped on GitHub, in one place.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf8f4;
+    --ink:#1c1b19;
+    --muted:#6b6760;
+    --line:#e7e2d8;
+    --card:#ffffff;
+    --accent:#0b6b53;
+    --accent-soft:#e7f1ed;
+    --shadow:0 1px 2px rgba(28,27,25,.04),0 8px 24px rgba(28,27,25,.05);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#16150f;--ink:#f1eee6;--muted:#a6a094;--line:#2c2a22;
+      --card:#1f1d16;--accent:#5fd0ab;--accent-soft:#1d2c26;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+    padding:0 24px;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:80px 0 120px}
+
+  header{margin-bottom:64px}
+  .eyebrow{
+    font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:18px;
+  }
+  h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;
+    font-size:clamp(38px,7vw,60px);line-height:1.05;letter-spacing:-.01em;
+    margin-bottom:20px;
+  }
+  .lede{font-size:19px;color:var(--muted);max-width:620px}
+  .lede a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+
+  .section{margin-top:56px}
+  .section-head{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:22px;
+    padding-bottom:12px;border-bottom:1px solid var(--line);
+  }
+  .section-head h2{
+    font-family:'Fraunces',Georgia,serif;font-weight:500;font-size:22px;letter-spacing:-.01em;
+  }
+  .section-head .count{font-size:13px;color:var(--muted)}
+
+  .grid{display:grid;gap:16px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:24px 26px;box-shadow:var(--shadow);
+    transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-2px);border-color:var(--accent);
+    box-shadow:0 2px 4px rgba(28,27,25,.05),0 16px 40px rgba(28,27,25,.09)}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .card h3{font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .card .tag{
+    font-size:12px;font-weight:500;color:var(--accent);
+    background:var(--accent-soft);padding:4px 10px;border-radius:999px;white-space:nowrap;
+  }
+  .card p{color:var(--muted);font-size:15px;margin:10px 0 18px}
+  .links{display:flex;gap:10px;flex-wrap:wrap}
+  .links a{
+    font-size:14px;font-weight:500;text-decoration:none;
+    padding:8px 14px;border-radius:10px;border:1px solid var(--line);
+    color:var(--ink);transition:background .15s ease,border-color .15s ease;
+    display:inline-flex;align-items:center;gap:7px;
+  }
+  .links a.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .links a.primary:hover{filter:brightness(1.07)}
+  .links a.ghost:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .links svg{width:14px;height:14px}
+
+  footer{
+    margin-top:80px;padding-top:28px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  }
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Built &amp; shipped</div>
+    <h1>Isabella Isotta</h1>
+    <p class="lede">Everything I've made and put live on GitHub, in one place. Mostly built with Claude, mostly for INSEAD, occasionally just for fun. Source for all of it lives on <a href="https://github.com/izzyisotta">github.com/izzyisotta</a>.</p>
+  </header>
+
+  <!-- APPS & PRODUCTS -->
+  <section class="section">
+    <div class="section-head"><h2>Apps &amp; products</h2><span class="count">2 projects</span></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Trove</h3>
+          <span class="tag">Next.js · live</span>
+        </div>
+        <p>Share your favourite books, films, and TV shows with friends. A social shelf for the things you love.</p>
+        <div class="links">
+          <a class="primary" href="https://shelf-one-cyan.vercel.app">Open app
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="ghost" href="https://github.com/izzyisotta/shelf">Source</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>INSEAD Elective Planner</h3>
+          <span class="tag">Interactive · live</span>
+        </div>
+        <p>An interactive planner for choosing INSEAD MBA electives, built for the 26D cohort.</p>
+        <div class="links">
+          <a class="primary" href="https://izzyisotta.github.io/insead-elective-planner/">Open planner
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="ghost" href="https://github.com/izzyisotta/insead-elective-planner">Source</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- INSEAD CLAUDE CODE -->
+  <section class="section">
+    <div class="section-head"><h2>INSEAD Claude Code community</h2><span class="count">2 projects</span></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top">
+          <h3>INSEAD Claude Code</h3>
+          <span class="tag">Next.js · live</span>
+        </div>
+        <p>A shared knowledge base for the INSEAD Claude Code community: the working version of the hub.</p>
+        <div class="links">
+          <a class="primary" href="https://insead-claude-code.vercel.app">Open site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="ghost" href="https://github.com/izzyisotta/insead-claude-code">Source</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>INSEAD AI Club Knowledge Hub</h3>
+          <span class="tag">Mockup · live</span>
+        </div>
+        <p>A clickable mockup of the proposed knowledge-sharing site: a static walkthrough of the concept before it was wired up.</p>
+        <div class="links">
+          <a class="primary" href="https://izzyisotta.github.io/insead-ai-club-knowledge-hub/">View mockup
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="ghost" href="https://github.com/izzyisotta/insead-ai-club-knowledge-hub">Source</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- EXPLAINERS & FOR FUN -->
+  <section class="section">
+    <div class="section-head"><h2>Explainers &amp; experiments</h2><span class="count">2 projects</span></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Vault System Explainer</h3>
+          <span class="tag">Explainer · live</span>
+        </div>
+        <p>A living explainer of how my Obsidian vault turns inputs (recordings, links, lectures, meetings) into permanent assets, with status badges for what's live versus planned.</p>
+        <div class="links">
+          <a class="primary" href="https://izzyisotta.github.io/vault-system-explainer/">Read it
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="ghost" href="https://github.com/izzyisotta/vault-system-explainer">Source</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>INSEAD Excuse Generator</h3>
+          <span class="tag">For fun · live</span>
+        </div>
+        <p>A plausible excuse for skipping anything at INSEAD, generated on demand. Exactly as serious as it sounds.</p>
+        <div class="links">
+          <a class="primary" href="https://izzyisotta.github.io/insead-excuse-generator/">Generate one
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+          <a class="ghost" href="https://github.com/izzyisotta/insead-excuse-generator">Source</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Built with Claude.</span>
+    <span><a href="https://github.com/izzyisotta">github.com/izzyisotta</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
