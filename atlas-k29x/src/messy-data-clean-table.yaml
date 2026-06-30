@@ -1,0 +1,169 @@
+template: explainer
+kicker: Data transformation
+title: Turning messy data into one clean table
+subtitle: |
+  When the data is already numbers, the hard part is the **schema, not the sums**.
+  Reconcile the shapes once; let deterministic code do every calculation.
+audience: For anyone integrating numeric data across many sources
+
+sections:
+  - type: bigidea
+    headline: |
+      Reach for a parser or **pandas** first. A model earns its place in exactly one spot:
+      proposing how each messy source maps onto your clean target, for you to approve.
+    body: |
+      It maps the column, never the cell. Three reasons a number never passes through the model:
+      it can drop or invent digits, it is not reproducible (the same cell can come back different),
+      and paying per row is slow and expensive. The model is a structure-proposer, not a calculator.
+
+  - type: flow
+    eyebrow: The integration pipeline
+    title: Five passes turn many sources into one table
+    stages:
+      - { num: 1, icon: "⤓", name: Load, cap: each file, quirks and all }
+      - { num: 2, icon: "⌖", name: Map, cap: columns to target schema, turning: true }
+      - { num: 3, icon: "≡", name: Normalise, cap: units, dates, types }
+      - { num: 4, icon: "⋈", name: Reconcile, cap: align grain, match entities }
+      - { num: 5, icon: "✓", name: Validate, cap: totals must tie out }
+    foot: Only step 2 calls the model, and only once per source. Everything else is deterministic and identical on every run.
+
+  - type: stages
+    eyebrow: The walkthrough
+    title: The decisions that do the real work
+    cards:
+      - tag: Step 0 · Diagnose
+        num: "00"
+        title: Which problem are you actually in?
+        lede: |
+          Two jobs wear the same words. Tell them apart before you build anything.
+        mechs:
+          - h: Messy text becomes structured
+            body: |
+              Emails, PDFs, call notes. The structure has to be *read out*. A model extracts the
+              semantic fields against a schema; code grabs the anchors like dates and IDs.
+          - h: Numbers in different layouts become integrated
+            body: |
+              Financial and operational reporting lives here. The data is already structured; it just
+              disagrees on column names, units, and grain. A wrangling job, not a reading job.
+          - h: The hybrid case
+            body: |
+              Numbers trapped inside PDFs or scanned sheets need both: a model to read the values
+              out, then the full numeric pipeline below to integrate and check them.
+            full_width: true
+      - tag: The split, made literal
+        num: "01"
+        title: Every pass is owned by one tool
+        lede: |
+          The divide is not "code for some steps, the model for others." It runs *through* one step:
+          in **Map**, the model proposes and code disposes. Everywhere else, code works alone.
+        mechs:
+          - h: Load · Python
+            body: |
+              `read_excel` / `read_csv`, one loader per source. Skip title banners, set the real
+              header row, drop in-sheet totals rows, coerce dtypes.
+          - h: Map · model proposes, Python applies
+            body: |
+              The model reads headers plus a few sample rows and returns a mapping (source column to
+              target column, with a unit scale). You approve it once; code applies it to every row.
+          - h: Normalise · Python
+            body: |
+              Rescale units, parse dates to one format, cast types, standardise sign conventions.
+              Pure deterministic transforms driven by the approved config.
+          - h: Reconcile · Python, with the model only for hard entity matches
+            body: |
+              Align grain (`resample` monthly to quarterly), then `concat` and join on entity and
+              period. Names that do not match get a hand-written alias map; only at scale does the
+              model propose matches for you to confirm.
+          - h: Validate · Python (the model may explain a failure in words)
+            body: |
+              Assertions on counts, totals, units, nulls. Deterministic pass or fail. If it fails the
+              model can describe the likely cause; it does not fix the number.
+            full_width: true
+      - tag: Step 2 · Map
+        num: "02"
+        turning: true
+        title: Map the schema once, apply it forever
+        lede: |
+          The only place a model belongs in a numeric pipeline, and it never sees a calculation.
+        mechs:
+          - h: Define one target schema
+            body: |
+              The canonical columns you want out: `entity`, `period`, `revenue_eur`, `ebitda_eur`,
+              with fixed units and one date format. Every source maps onto this.
+          - h: The model proposes, against a forced shape
+            body: |
+              Have it return the mapping *against a JSON schema it must fill* (a tool call), so you
+              get a validated object, not prose to parse. Bad shapes are rejected and retried before
+              they reach you. Returns `"Net Sales" -> revenue_eur, scale x1000`.
+          - h: You approve once; code applies forever
+            body: |
+              The approved mapping is a versioned config file. From then on, deterministic code
+              renames, rescales, parses, and types every row on every refresh, with no model in the
+              loop. The model ran once for this source, not once per row.
+            full_width: true
+      - tag: Step 5 · Guardrails
+        num: "05"
+        title: What silently breaks, and the checks that catch it
+        lede: |
+          Numeric integration fails *quietly*. Nothing errors; the totals are just wrong.
+        mechs:
+          - h: Unit and currency mismatch
+            body: |
+              One sheet in EUR thousands, another in EUR millions. They blend at the wrong scale and
+              nothing complains. Make units an explicit field and assert on them.
+          - h: Totals rows and stacked headers
+            body: |
+              A "Total" row ingested as data double-counts everything downstream. Title banners and
+              multi-row headers break naive loaders. Budget one loader per source.
+          - h: Schema drift
+            body: |
+              A source quietly renames or reorders a column and the mapping misfires. Pin the
+              expected headers; when they change, re-run the one Map step and re-approve. Do not
+              patch it downstream.
+            full_width: true
+
+  - type: pillars
+    eyebrow: "The dividing line: exact-and-numeric vs judgement-about-meaning"
+    title: Code does the maths; the model only proposes structure
+    pillars:
+      - icon: "Σ"
+        title: Deterministic code (pandas, SQL)
+        lead: |
+          Anything that must be exact or reproducible. Every time, the same way.
+        bullets:
+          - "**Every calculation, join, pivot, resample**"
+          - "**Applies** the approved mapping to every cell"
+          - "**Validation** and reconciliation"
+          - "**Reproducible:** same input, same output"
+      - icon: "✦"
+        title: The model
+        lead: |
+          Anything needing judgement about meaning. Once, for a human to approve.
+        bullets:
+          - "**Proposes** the column mappings and unit scales"
+          - "**Suggests** entity aliases when too many to map by hand"
+          - "**Explains** anomalies in plain language after the merge"
+          - "**Never** transforms, transcribes, or edits a number"
+
+  - type: scoring
+    eyebrow: The gate every refresh must pass
+    title: Validate before you trust the merged table
+    lead: |
+      Cheap deterministic checks. If one fails, stop and look.
+    rows:
+      - { pts: "✓", title: Row counts, body: "rows out equal rows in, minus the totals rows you dropped on purpose." }
+      - { pts: "✓", title: Totals tie out, body: "each source's own total reconciles to that same source inside the merged table." }
+      - { pts: "✓", title: Units sane, body: "no column sits 1000x its peers: the classic thousands-vs-millions tell." }
+      - { pts: "✓", title: No nulls, body: "required columns are fully populated; a blank means a mapping missed." }
+    note: |
+      Cheap to run on every data drop; they catch the failures that do not throw an error.
+
+  - type: oneline
+    text: |
+      The model touches the **mapping**, never the **numbers**.
+      Reconcile the shapes once; let code do the maths forever.
+    foot: Map once, apply forever.
+
+footer:
+  meta: Data transformation
+  tail: Reach for pandas first; escalate to a model only for the schema.
